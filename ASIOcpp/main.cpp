@@ -11,31 +11,47 @@
  */
 
 #include <iostream>
+#include <string>
 #include <cstdlib>
 #include "asio.hpp"
 
+using std::string;
+
 void print(const asio::error_code&)
 {
-    std::cout << "Hello worLd !\n";
+    std::cout << "Print test is done !\n";
     std::cout << "Fvckity bye !" << std::endl;
 }
 
-int testfunc1()
+int synctest()
 {
-        //Commented for fun
+    asio::io_context io;
+    asio::steady_timer t(io, asio::chrono::seconds(3));
+    t.wait();
+    std::cout << "Hello ! So where was I ? BARCELONA !\n" << std::endl;
+    return 0;
+}
+
+int asynctest()
+{
+    //Commented for fun
     asio::io_context io;
     asio::steady_timer t(io, asio::chrono::seconds(5));
     t.async_wait(&print);
+    //This part runs first
     std::cout<<"Press Enter to continue !";
     std::cin.get();
     std::cout<<"Kono Dio da !" << std::endl;
-    io.run();
+    //run async_wait
+    io.run();  //If the timer expires, the print function will run
+    std::cout<< "End of the line, my friend !\n" << std::endl;
     return 0;
 }
 
 int main(int argc, char** argv) {
 
-    testfunc1();
+    synctest();
+    asynctest();
     return 0;
 }
 
