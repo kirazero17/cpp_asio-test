@@ -13,11 +13,13 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include "asio.hpp"
+#include <boost/asio.hpp>
+
+
 
 using std::string;
 
-void print(const asio::error_code&)
+void print(const boost::system::error_code&)
 {
     std::cout << "Print test is done !\n";
     std::cout << "Fvckity bye !" << std::endl;
@@ -25,8 +27,8 @@ void print(const asio::error_code&)
 
 int synctest()
 {
-    asio::io_context io;
-    asio::steady_timer t(io, asio::chrono::seconds(3));
+    boost::asio::io_context io;
+    boost::asio::steady_timer t(io, boost::asio::chrono::seconds(3));
     t.wait();
     std::cout << "Hello ! So where was I ? BARCELONA !\n" << std::endl;
     return 0;
@@ -35,8 +37,8 @@ int synctest()
 int asynctest()
 {
     //Commented for fun
-    asio::io_context io;
-    asio::steady_timer t(io, asio::chrono::seconds(5));
+    boost::asio::io_context io;
+    boost::asio::steady_timer t(io, boost::asio::chrono::seconds(5));
     t.async_wait(&print);
     //This part runs first
     std::cout<<"Press Enter to continue !";
@@ -44,7 +46,14 @@ int asynctest()
     std::cout<<"Kono Dio da !" << std::endl;
     //run async_wait
     io.run();  //If the timer expires, the print function will run
+    //The next one will just run normally
     std::cout<< "End of the line, my friend !\n" << std::endl;
+    return 0;
+}
+
+int bindtest()
+{
+    
     return 0;
 }
 
