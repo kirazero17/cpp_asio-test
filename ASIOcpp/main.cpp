@@ -16,11 +16,13 @@
 
 void print(const asio::error_code&)
 {
-    std::cout << "Hello worLd !" << std::endl;
+    std::cout << "Hello worLd !\n";
+    std::cout << "Fvckity bye !" << std::endl;
 }
 
-int main(int argc, char** argv) {
-    //Commented for fun
+int testfunc1()
+{
+        //Commented for fun
     asio::io_context io;
     asio::steady_timer t(io, asio::chrono::seconds(5));
     t.async_wait(&print);
@@ -28,7 +30,12 @@ int main(int argc, char** argv) {
     std::cin.get();
     std::cout<<"Kono Dio da !" << std::endl;
     io.run();
-    
+    return 0;
+}
+
+int main(int argc, char** argv) {
+
+    testfunc1();
     return 0;
 }
 
